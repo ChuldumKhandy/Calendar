@@ -46,7 +46,7 @@
         [numOfDaysInMonth addObject:[NSNumber numberWithInt:30]];
         [numOfDaysInMonth addObject:[NSNumber numberWithInt:31]];
         [self setupView];
-        [self setBackgroundColor: UIColor.blueColor];
+        [self setBackgroundColor: UIColor.clearColor];
     }
      return self;
 }
@@ -149,7 +149,7 @@
     [dateFormatter setDateFormat:@"yyyy-MM-dd"];
     NSDate *currentDate = [dateFormatter dateFromString:currentDateString];
     
-    for (int index = 0; index <= dates.count; index++) {
+    for (int index = 0; index < dates.count; index++) {
         NSDate *activityDate = [dateFormatter dateFromString:dates[index]];
         if (currentDate == activityDate) {
             return TRUE;
@@ -161,16 +161,18 @@
 
 #pragma mark - MonthViewProtocol
 - (void)didChangeMonth:(NSInteger *)monthIndex :(NSInteger *)year{
-    currentMonthIndex = monthIndex + 1;
-    currentYear = year;
+    NSInteger calMonth = monthIndex;
+    NSInteger calYear = year;
+    
+    currentMonthIndex = calMonth + 1;
+    currentYear = calYear;
     
     //for leap year, make february month of 29 days
-    if (monthIndex == 1) {
-        NSInteger index = monthIndex;
+    if (calMonth == 1) {
         if (currentYear % 4 == 0) {
-            numOfDaysInMonth[index] = [NSNumber numberWithInt:29];
+            numOfDaysInMonth[calMonth] = [NSNumber numberWithInt:29];
         } else {
-            numOfDaysInMonth[index] = [NSNumber numberWithInt:28];
+            numOfDaysInMonth[calMonth] = [NSNumber numberWithInt:28];
         }
     }
     //end
@@ -189,7 +191,6 @@
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     DayCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"DayCellIdentifier" forIndexPath:indexPath];
-    [cell setBackgroundColor: UIColor.purpleColor];
     
     if (indexPath.item <= firstWeekDayOfMonth - 2) {
         [cell setHidden: TRUE];
@@ -197,11 +198,12 @@
         NSInteger calcDate = indexPath.row - firstWeekDayOfMonth + 2;
         [cell setHidden: FALSE];
         cell.dateLabel.text = [NSString stringWithFormat:@"%i", calcDate];
+        if ([self checkDateActivites:calcDate :currentMonthIndex :currentYear]) {
+            [cell setBackgroundColor: UIColor.cyanColor];
+        } else {
+            [cell setBackgroundColor: UIColor.clearColor];
+        }
     }
-    
-    
-    //if ([self checkDateActivites])
-    
     
     return cell;
 }

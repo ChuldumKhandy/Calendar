@@ -19,7 +19,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self setupView];
-        [self setBackgroundColor: UIColor.blueColor];
+        [self setBackgroundColor: UIColor.clearColor];
     }
      return self;
 }

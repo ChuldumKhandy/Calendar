@@ -17,7 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    CustomCalendarView *calendar = [[CustomCalendarView alloc] initWithFrame: CGRectMake(50, 300, 300, 300)];
+    CustomCalendarView *calendar = [[CustomCalendarView alloc] initWithFrame: CGRectMake(50, 300, 300, 350)];
     [self.view addSubview: calendar];
 }
 

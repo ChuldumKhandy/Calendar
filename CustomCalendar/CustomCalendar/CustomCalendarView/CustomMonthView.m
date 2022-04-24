@@ -40,7 +40,8 @@
         
         [self currentDate];
         [self setupView];
-        [self setBackgroundColor: UIColor.blueColor];
+        monthLabel.text = [NSString stringWithFormat:@"%@ %i", months[currentMonthIndex], currentYear];
+        [self setBackgroundColor: UIColor.clearColor];
     }
      return self;
 }
@@ -49,7 +50,7 @@
     NSDate *date = NSDate.now;
     NSCalendar *calendar = NSCalendar.currentCalendar;
     NSDateComponents *components = [calendar components: (NSYearCalendarUnit | NSMonthCalendarUnit) fromDate:date];
-    currentMonthIndex = components.month;
+    currentMonthIndex = components.month - 1;
     currentYear = components.year;
     
 }
@@ -67,7 +68,7 @@
         UIButton *btn = [[UIButton alloc] initWithFrame: CGRectZero];
         [btn setTitle:@">" forState:normal];
         [btn setTitleColor:UIColor.blackColor forState:normal];
-        [btn addTarget:self action:@selector(tappedYear) forControlEvents:UIControlEventTouchUpInside];
+        [btn addTarget:self action:@selector(tappedYear:) forControlEvents:UIControlEventTouchUpInside];
         btn.translatesAutoresizingMaskIntoConstraints = FALSE;
         return btn;
     }();
@@ -76,7 +77,7 @@
         UIButton *btn = [[UIButton alloc] initWithFrame: CGRectZero];
         [btn setTitle:@"<" forState:normal];
         [btn setTitleColor:UIColor.blackColor forState:normal];
-        [btn addTarget:self action:@selector(tappedMonth) forControlEvents:UIControlEventTouchUpInside];
+        [btn addTarget:self action:@selector(tappedMonth:) forControlEvents:UIControlEventTouchUpInside];
         btn.translatesAutoresizingMaskIntoConstraints = FALSE;
         return btn;
     }();
@@ -85,7 +86,7 @@
         UIButton *btn = [[UIButton alloc] initWithFrame: CGRectZero];
         [btn setTitle:@">" forState:normal];
         [btn setTitleColor:UIColor.blackColor forState:normal];
-        [btn addTarget:self action:@selector(tappedMonth) forControlEvents:UIControlEventTouchUpInside];
+        [btn addTarget:self action:@selector(tappedMonth:) forControlEvents:UIControlEventTouchUpInside];
         btn.translatesAutoresizingMaskIntoConstraints = FALSE;
         return btn;
     }();
